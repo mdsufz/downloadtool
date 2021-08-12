@@ -26,8 +26,6 @@ You may install the packages (except tkinter on Linux) via `pip install packageX
 pip install os re platform urllib.request zipfile tarfile distro
 ```
 
-The tkinter package has some system dependencies. You may install this package via `sudo apt-get install python3-tk` (on Ubuntu systems).
-
 In addition, the [SRAtoolkit](https://github.com/ncbi/sra-tools) is required. If you have not installed it you may use our simple install and configuration script see [below](#sratoolkit-install-script)
 
 ## Download scripts
