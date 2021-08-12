@@ -18,7 +18,13 @@ The scripts are written in Python3. The following Python Packages are necessary:
 * tarfile
 * distro
  
-You may install the packages (except tkinter on Linux) via `pip install packageXY` or `pip3 install packageXY` (if you have Python2 installed and set as default). 
+The tkinter package has some system dependencies. You may install this package via `sudo apt-get install python3-tk` (on Ubuntu systems).
+
+You may install the packages (except tkinter on Linux) via `pip install packageXY` or `pip3 install packageXY` (if you have Python2 installed and set as default). To install all at once:
+
+```
+pip install os re platform urllib.request zipfile tarfile distro
+```
 
 The tkinter package has some system dependencies. You may install this package via `sudo apt-get install python3-tk` (on Ubuntu systems).
 
