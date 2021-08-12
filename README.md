@@ -22,29 +22,30 @@ You may install the packages (except tkinter on Linux) via `pip install packageX
 
 The tkinter package has some system dependencies. You may install this package via `sudo apt-get install python3-tk` (on Ubuntu systems).
 
-In addition, the SRAtoolkit is required. If you have not installed it you may use our simple install and configuration script see [below](#sratoolkit-install-script)
+In addition, the [SRAtoolkit](https://github.com/ncbi/sra-tools) is required. If you have not installed it you may use our simple install and configuration script see [below](#sratoolkit-install-script)
 
 ## Download scripts
-To download simply clone this repository.
+To download all scripts clone this repository:
 
 ```
-git clone https://github.com/mdsufz/downloadtool
-cd hmgdb_script # change to the direction of the scripts
+git clone https://github.com/mdsufz/downloadtool.git
 ```
 
-The download tool use the SRAtoolkit to download metagenome data. The SRAtoolkit offers very stable and fast download. If you have not installed the SRAtoolkit you can use our install and configuration script. 
+The download tool uses the [SRAtoolkit](https://github.com/ncbi/sra-tools) to download metagenome data. The [SRAtoolkit](https://github.com/ncbi/sra-tools) offers very stable and fast download. If you have not installed the SRAtoolkit you can use our install and configuration script. 
 
 ### Graphical user interface (GUI)
 We developed an east-to-use GUI to perform all relevant steps. Execute the `python download_gui.py` script to start the GUI. 
 
-![gui interface](gui.png "GUI interface")
+![The GUI interface](gui.png "GUI interface")
 
-To install the SRAtoolkit click button at the bottom. To download metagenome sample. Select the CSV file, an output folder and the location of the SRAtoolkit folder and start download with the ***Start Download*** button. There are input field for optional parameters of [maximal file size](#maximal-file-size) and [CPU cores](cpu-cores) to use. The parameters are explained below.
+To install the SRAtoolkit click ***Download and configure SRAtoolkit*** button at the bottom. The download size is around 70MB and is completed if you get the notification.
+
+To download metagenome sample. Select the CSV export file from MarMDB, an output folder and the location of the SRAtoolkit folder and start download with the ***Start Download*** button. There are input field for optional parameters of [maximal file size](#maximal-file-size) and [CPU cores](cpu-cores) to use. The parameters are explained below.
 
 
 ### Python scripts
 
-All script are written for Python3, thus use `python3` instead of `python` to call the script if you have Python2 install too and set as default. You can call the help to see required parameters via:
+All script are written for Python3, thus use `python3` instead of `python` to call the script if you have Python2 install too and set as default. You may call the help to see required parameters (details explained below) via:
 
 ```
 # call help
@@ -80,20 +81,20 @@ python get_sra_sample.py -c csv_path -o output_path -l too_path -t 2 -m 20
 
 ### Windows executables
 
-The Windows executables are compiled in Win10 64bit and can be used without installing Python and its dependencies on Windows.
+The Windows executables are compiled on Win10 64bit and can be used without installing Python and its dependencies on Windows.
 
-The GUI can be started with double click on the exe. 
+The GUI can be started with double click on the `download_gui.exe`. We apologize the safty check question when starting this executable due to missing Windows signature.
 
-Due to the need of parameter input (e.g. output folder) the other executable must be started from the command-line. Open the Windows `CMD` navigate to the executable and use the parameters similar to the Python scripts:
+Instead of the GUI you may want to use the command-line version of the single executables. Open the Windows terminal (`CMD`) navigate to the executable (`cd path_to_exe`) and use the parameters similar to the Python scripts:
 
-The command-line executables can be used similar to the Python scripts:
+The command-line executables can be used similar to the [Python scripts](#python-scripts), the parameters are identical:
 
 ```
 # install SRAtoolkit
 install_sra.exe -p install_path
 
 # download metagenome samples
-get_sra_sample.exe -c ...
+get_sra_sample.exe -c csv_path -o output_path -l too_path -t 2 -m 20
 
 ```
 
