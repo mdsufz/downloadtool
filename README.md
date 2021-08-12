@@ -44,6 +44,14 @@ To install the SRAtoolkit click button at the bottom. To download metagenome sam
 
 ### Python scripts
 
+All script are written for Python3, thus use `python3` instead of `python` to call the script if you have Python2 install too and set as default. You can call the help to see required parameters via:
+
+```
+# call help
+python install_sra.py -h
+python get_sra_sample.py -h
+```
+
 #### SRAtoolkit install script
 
 If you have not install SRAtoolkit you can use our install script. It performs the download and configuration. To run the install script run 
@@ -55,9 +63,20 @@ python install_sra.py -p install_path`
 
 #### Download script
 
-The download script expects 3 different parameters: 
+The download script requires 3 mendatory and 2 optional parameters: 
 
-* 
+* CSV path (`-c` or `--csv-path`): the path to the CSV export file from MarMDB.
+* output path (`-o` or `--out-path`): the path of the folder where all download and dumped metagenome data will be written.
+* tool path (`-l` or `--tool-path`): the path to the folder where the SRAtoolkit was installed.
+* [optional] [threads](#cpu-cores): `-t` or `--threads`
+* [optional] [max file size](#maximal-file-size) `-m` or `--max-size`
+
+The download script can be call via:
+
+```
+# download SRA files and create FASTQ files
+python get_sra_sample.py -c csv_path -o output_path -l too_path -t 2 -m 20
+```
 
 ### Windows executables
 
@@ -78,11 +97,11 @@ get_sra_sample.exe -c ...
 
 ```
 
-## Parameters
+### Optional parameters
 
-### Maximal file size
-The parameter controls the maximal file size that the SRAtoolkit will download. It is given in GB.
+#### Maximal file size
+The parameter controls the maximal file size that the SRAtoolkit will download. The file size is given in GB.
 
-### CPU cores
-The SRAtoolkit can use multiple cores to create the FASTQ files are download. More CPUs will speed up this process.
+#### CPU cores
+The SRAtoolkit can use multiple cores/threads to create the FASTQ files are download. More CPUs will speed up this process.
 
