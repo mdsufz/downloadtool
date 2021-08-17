@@ -1,6 +1,6 @@
 # Repository of the Download Tool for the MarMDB, HMgDB, and TMDB
 
-The [Python scripts](#python-scripts) can be used on all operating systems. For Windows (Win10) we recommend the use of the [Windows executable](#windows-executables) that are provided for easy use without the installation of Python or any dependencies.
+The [Python scripts](#python-scripts) can be used on all operating systems. For Windows (Win10) we recommend the [Windows executable](#windows-executables) that are provided for easy use without the need to install Python or any dependencies.
 
 ## Compatibility to other metadata databases
 The Download tool is compatible with exported CSV tables from the TerrestrialMetagenomeDB [Website](https://webapp.ufz.de/tmdb/) [Publication](https://academic.oup.com/nar/article/48/D1/D626/5625925) [PubMed](https://pubmed.ncbi.nlm.nih.gov/31728526/) and the HumanMetagenomeDB [Website](https://webapp.ufz.de/hmgdb/), [Publication](https://academic.oup.com/nar/article/49/D1/D743/5998395), [PubMed](https://pubmed.ncbi.nlm.nih.gov/33221926/). 
