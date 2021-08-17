@@ -85,7 +85,7 @@ python get_sra_sample.py -c csv_path -o output_path -l sratoolkit_path -t 2 -m 2
 
 ### Windows executables
 
-The Windows executables are compiled on Win10 64bit and can be used without the need to install Python and its dependencies on Windows.
+The Windows executables are compiled on Win10 64bit and can be used without the need to install Python and its dependencies on Windows. Please find them inside the dist folder.
 
 The GUI can be started with a double click on the `download_gui.exe`. We apologize for the safety check question when starting this executable due to the missing Windows signature.
 
