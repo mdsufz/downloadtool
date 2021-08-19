@@ -93,7 +93,7 @@ def config_sratoolkit(toolPath):
             if not isfile(join(str(toolPath).replace('/','\\'),'bin','vdb-config.exe')):
                 print('No vdb-config found in '+join(str(toolPath).replace('/','\\'),'bin')) 
             else:
-                system('echo & echo.|'+join(str(toolPath).replace('/','\\'),'bin','vdb-config')+' -i --interactive-mode textual')
+                system('echo & echo.|"'+join(str(toolPath).replace('/','\\'),'bin','vdb-config')+'" -i --interactive-mode textual')
                 system("FOR /F %i IN ('powershell -Command \"[guid]::NewGuid().ToString()\"') DO echo /LIBS/GUID = \"%i\" >> \"%systemdrive%%homepath%\\.ncbi\\user-settings.mkfg\"")
         else:
             # check if tool is present
@@ -102,7 +102,7 @@ def config_sratoolkit(toolPath):
             if not isfile(join(str(toolPath),'bin','vdb-config')):
                 print('No vdb-config found in '+join(str(toolPath),'bin'))
             else:
-                system("echo | "+vdb_config_path+" -i --interactive-mode textual")
+                system("echo | \""+vdb_config_path+"\" -i --interactive-mode textual")
                 system("printf '/LIBS/GUID = \"%s\"\n' `uuidgen` >> ~/.ncbi/user-settings.mkfg")
     else:
         # print status
@@ -132,6 +132,21 @@ def get_ids(csvPath):
 	f.close()
 	return sra_list, mgrast_list
 
+# helper function to replace spaces in path to toolkit 
+# (somehow the escape with " is not working for call the sratoolkit script/exe on windows)
+def white_esc(path):
+    p_s = path.split("\\")
+    p_m = '' # merge path
+    for i in p_s:
+        if(' ' in i):
+            p_m = join(p_m, "\""+i+"\"")
+        else:
+            p_m = join(p_m, i)
+    p_m = p_m.replace('/','\\')
+    p_m = p_m.replace(':',':\\') # add \\ manully, because C: + xxx is join to C:xxx instead of C:\
+    # return
+    return p_m
+
 # download sample
 def download_samples(csvPath, outPath, toolPath, numThreads=2, maxSize='20G'):
     # get OS
@@ -146,23 +161,27 @@ def download_samples(csvPath, outPath, toolPath, numThreads=2, maxSize='20G'):
     # for each entry
     for i in sra_list:
         # status print
-        print (i+" started...")
-        
-        # prefetch the reads
-        system(join(toolPath,'bin','prefetch')+" "+i+" -p --max-size "+str(maxSize)+" -O "+join(outPath))
-        
+        print(i+" started...")
+
+        ## prefetch
+        # win
+        if my_os == 'Windows':
+            system(join(white_esc(toolPath.replace('/','\\')),'bin','prefetch')+" "+i+" -p --max-size "+str(maxSize)+" -O \""+join(outPath.replace('/','\\'))+"\"")
+        # linux    
+        else:
+            system("\""+join(toolPath,'bin','prefetch')+"\" "+i+" -p --max-size "+str(maxSize)+" -O \""+join(outPath)+"\"")
+
+        ## validate the download & extract the reads from the prefetched files
         # check if SRA file was prefetched
         if isfile(join(outPath,i,i+'.sra')):
-            # validate the download
+            # win
             if my_os == 'Windows':
-                # win
-                system(join(toolPath,'bin','vdb-validate')+" "+join(outPath,i)+" 1> "+join(outPath,i,i+".intlog")+" 2>&1")
+                system(join(white_esc(toolPath.replace('/','\\')),'bin','vdb-validate')+" \""+join(outPath,i)+"\" 1> \""+join(outPath.replace('/','\\'),i,i+".intlog")+"\" 2>&1")
+                system(join(white_esc(toolPath.replace('/','\\')),'bin','fasterq-dump')+" -p -e "+str(numThreads)+" -O \""+join(outPath.replace('/','\\'),i)+"\" "+i)
+            # linux
             else:
-                # linux
-                system(join(toolPath,'bin','vdb-validate')+" "+join(outPath,i)+" 2> "+join(outPath,i,i+".intlog"))
+                system("\""+join(toolPath,'bin','vdb-validate')+"\" \""+join(outPath,i)+"\" 2> \""+join(outPath,i,i+".intlog")+"\"")
+                system("\""+join(toolPath,'bin','fasterq-dump')+"\" -p -e "+str(numThreads)+" -O \""+join(outPath,i)+"\" "+i)
             
-            # extract the reads from the prefetched files
-            system(join(toolPath,'bin','fasterq-dump')+" -p -e "+str(numThreads)+" -O "+join(outPath,i)+" "+i)
-
         # status print
         print(i+" FINISHED!\n")
